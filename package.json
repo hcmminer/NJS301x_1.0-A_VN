@@ -1,0 +1,20 @@
+{
+	"name": "njs301x_1.0-a_vn",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hcmminer/NJS301x_1.0-A_VN.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/hcmminer/NJS301x_1.0-A_VN/issues"
+	},
+	"homepage": "https://github.com/hcmminer/NJS301x_1.0-A_VN#readme"
+}
