@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const port = 3000;
+const path = require("path");
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
-	res.send("<p>The Middleware that handles just /</p>");
+	res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
 app.get("/users", (req, res) => {
-	res.send("<p>The Middleware that handles just /users</p>");
+	res.sendFile(path.join(__dirname, "views", "users.html"));
 });
 
 app.listen(port, () => {
