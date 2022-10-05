@@ -1,8 +1,15 @@
-const http = require("http");
-const routes = require("./routes");
+const express = require("express");
+const app = express();
+const port = 3000;
 
-console.log(routes.someText);
+app.get("/", (req, res) => {
+	res.send("<p>The Middleware that handles just /</p>");
+});
 
-const server = http.createServer(routes.handler)
+app.get("/users", (req, res) => {
+	res.send("<p>The Middleware that handles just /users</p>");
+});
 
-server.listen(3000);
+app.listen(port, () => {
+	console.log(`Example app listening on port ${port}`);
+});
