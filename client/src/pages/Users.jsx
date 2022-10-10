@@ -1,12 +1,19 @@
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Navigation from "../components/Navigation";
 
 const Users = () => {
 	const [users, setUsers] = useState([]);
-	fetch("http://localhost:5000/users")
-		.then((response) => response.json())
-		.then((data) => setUsers(data));
+	useEffect(() => {
+		const getUsers = async () => {
+			const response = await fetch("http://localhost:5000/users");
+			let data = await response.json();
+			setUsers(data);
+		};
+		getUsers();
+	}, []);
+
 	return (
 		<div>
 			<Navigation />

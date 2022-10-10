@@ -8,9 +8,19 @@ const navigation = () => {
 						Users
 					</a>
 				</li>
-				<li className="menu-item">
+				{/* <li className="menu-item">
 					<a href="/" className="menu-link">
 						Add User
+					</a>
+				</li> */}
+				<li className="menu-item">
+					<a href="/" className="menu-link">
+						Shop
+					</a>
+				</li>
+				<li className="menu-item">
+					<a href="/add-product" className="menu-link">
+						Add Product
 					</a>
 				</li>
 			</ul>
