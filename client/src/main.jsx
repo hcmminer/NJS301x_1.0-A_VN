@@ -2,27 +2,16 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 
-import AddUser from "./pages/AddUser";
-import Users from "./pages/Users";
-import Shop from "./pages/shop";
-import AddProduct from "./pages/AddProduct";
+import EditProduct from "./pages/admin/EditProduct";
 
 const router = createBrowserRouter([
-	// {
-	// 	path: "/",
-	// 	element: <AddUser />,
-	// },
 	{
-		path: "/users",
-		element: <Users />,
+		path: "/admin/add-product",
+		element: <EditProduct editing={false} />,
 	},
 	{
-		path: "/",
-		element: <Shop />,
-	},
-	{
-		path: "/add-product",
-		element: <AddProduct />,
+		path: "/admin/edit-product",
+		element: <EditProduct editing={true} />,
 	},
 ]);
 
