@@ -22,7 +22,7 @@ const index = () => {
 								</div>
 								<div className="card__content">
 									<h2 className="product__price">
-										${product.price}
+										{product.price}
 									</h2>
 									<p className="product__description">
 										{product.description}

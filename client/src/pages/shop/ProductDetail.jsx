@@ -1,9 +1,12 @@
 import React from "react";
-import AddToCart from "../../components/AddToCart";
+import Navigation from "../../components/Navigation";
+import { useLoaderData } from "react-router-dom";
 
-const ProductDetail = ({product}) => {
+const ProductDetail = () => {
+	const product = useLoaderData();
 	return (
 		<div>
+			<Navigation />
 			<main class="centered">
 				<h1>{product.title}</h1>
 				<hr />
@@ -12,7 +15,6 @@ const ProductDetail = ({product}) => {
 				</div>
 				<h2>{product.price}</h2>
 				<p>{product.description}</p>
-				<AddToCart />
 			</main>
 		</div>
 	);

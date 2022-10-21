@@ -11,3 +11,9 @@ export const createProduct = async (product) => {
 	const data = await response.json();
 	return data;
 };
+
+export const getProducts = async () => {
+	const response = await fetch(`${API}/admin/products`);
+	const data = await response.json();
+	return data;
+};

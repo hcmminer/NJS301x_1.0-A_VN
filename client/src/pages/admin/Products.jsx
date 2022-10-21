@@ -1,38 +1,52 @@
-const { default: Navigation } = require("../../components/Navigation");
-import React from "react";
+import Navigation from "../../components/Navigation";
+import React, { useEffect, useState } from "react";
+import { getProducts } from "./apiAdmin";
 
 const products = () => {
+	const [products, setProducts] = useState([]);
+	const prods = products;
+	useEffect(() => {
+		getProducts()
+			.then((data) => {
+				if (data.error) {
+					console.log(data.error.message);
+				} else {
+					setProducts(data);
+				}
+			})
+			.catch((err) => console.log(err));
+	}, []);
 	return (
 		<div>
 			<Navigation />
 			<main>
 				{prods.length > 0 ? (
-					<div class="grid">
+					<div className="grid">
 						{prods.map((product, index) => (
-							<article class="card product-item" key={index}>
-								<header class="card__header">
-									<h1 class="product__title">
+							<article className="card product-item" key={index}>
+								<header className="card__header">
+									<h1 className="product__title">
 										{product.title}
 									</h1>
 								</header>
-								<div class="card__image">
+								<div className="card__image">
 									<img
-										src="{ product.imageUrl }"
-										alt="{ product.title }"
+										src={product.imageUrl}
+										alt={product.imageUrl}
 									/>
 								</div>
-								<div class="card__content">
-									<h2 class="product__price">
+								<div className="card__content">
+									<h2 className="product__price">
 										${product.price}
 									</h2>
-									<p class="product__description">
+									<p className="product__description">
 										{product.description}
 									</p>
 								</div>
-								<div class="card__actions">
+								<div className="card__actions">
 									<a
 										href="/admin/edit-product/{ product.id }?edit=true"
-										class="btn"
+										className="btn"
 									>
 										Edit
 									</a>
@@ -45,7 +59,7 @@ const products = () => {
 											value="{ product.id }"
 											name="productId"
 										/>
-										<button class="btn" type="submit">
+										<button className="btn" type="submit">
 											Delete
 										</button>
 									</form>
