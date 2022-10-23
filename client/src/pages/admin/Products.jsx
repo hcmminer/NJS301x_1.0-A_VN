@@ -1,21 +1,27 @@
 import Navigation from "../../components/Navigation";
 import React, { useEffect, useState } from "react";
-import { getProducts } from "./apiAdmin";
+import { deleteProduct, getProducts } from "./apiAdmin";
 
 const products = () => {
 	const [products, setProducts] = useState([]);
+	const [cartLoading, setCartLoading] = useState(false);
 	const prods = products;
 	useEffect(() => {
-		getProducts()
-			.then((data) => {
-				if (data.error) {
-					console.log(data.error.message);
-				} else {
-					setProducts(data);
-				}
-			})
-			.catch((err) => console.log(err));
-	}, []);
+		getProducts().then((data) => {
+			if (data.error) {
+				console.log(data.error.message);
+			} else {
+				setProducts(data);
+			}
+		});
+	}, [cartLoading]);
+
+	const deleteEvent = (product) => (e) => {
+		deleteProduct(product).then(console.log("deleted"));
+		setCartLoading(!cartLoading);
+	};
+
+	const editEvent = (productId) => (e) => {};
 	return (
 		<div>
 			<Navigation />
@@ -45,24 +51,13 @@ const products = () => {
 								</div>
 								<div className="card__actions">
 									<a
-										href="/admin/edit-product/{ product.id }?edit=true"
+										href={`/admin/edit-product/${product.id}`}
 										className="btn"
+										onClick={editEvent(product)}
 									>
 										Edit
 									</a>
-									<form
-										action="/admin/delete-product"
-										method="POST"
-									>
-										<input
-											type="hidden"
-											value="{ product.id }"
-											name="productId"
-										/>
-										<button className="btn" type="submit">
-											Delete
-										</button>
-									</form>
+									<a onClick={deleteEvent(product)}>Delete</a>
 								</div>
 							</article>
 						))}
