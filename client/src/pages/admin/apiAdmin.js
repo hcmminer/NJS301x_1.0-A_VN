@@ -10,6 +10,7 @@ export const createProduct = async (product) => {
 	});
 	const data = await response.json();
 	return data;
+	console.log(data);
 };
 
 export const getProducts = async () => {
@@ -21,6 +22,22 @@ export const getProducts = async () => {
 export const deleteProduct = async (product) => {
 	const res = await fetch(`${API}/admin/delete-product`, {
 		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(product),
+	});
+};
+
+export const editProduct = async (productId) => {
+	const res = await fetch(`${API}/admin/edit-product/${productId}`);
+	const data = await res.json();
+	return data;
+};
+
+export const postEditProduct = async (product) => {
+	const res = await fetch(`${API}/admin/edit-product`, {
+		method: "post",
 		headers: {
 			"Content-Type": "application/json",
 		},

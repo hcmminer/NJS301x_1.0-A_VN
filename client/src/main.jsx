@@ -32,7 +32,7 @@ const router = createBrowserRouter([
 		element: <EditProduct editing={false} path="/admin/add-products" />,
 	},
 	{
-		path: "/admin/edit-product/productId",
+		path: "/admin/edit-product/:productId",
 		element: <EditProduct editing={true} path="/admin/edit-product" />,
 	},
 	{

@@ -1,31 +1,61 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navigation from "../../components/Navigation";
-import { createProduct } from "./apiAdmin";
+import { createProduct, editProduct, postEditProduct } from "./apiAdmin";
+import { useParams } from "react-router-dom";
+import SupportMessages from "../../components/SupportMessages";
+import { Navigate } from "react-router-dom";
 
-const EditProduct = ({ editing, product }) => {
+const EditProduct = ({ editing }) => {
 	const [newProduct, setNewtProduct] = useState({
 		title: "",
 		imageUrl: "",
 		description: "",
 		price: "",
 	});
-	const [editingProduct, setEditingProduct] = useState(product);
+	const [editingProduct, setEditingProduct] = useState({
+		id: "",
+		title: "",
+		imageUrl: "",
+		description: "",
+		price: "",
+	});
+
+	const { productId } = useParams();
+
+	useEffect(() => {
+		if (editing) {
+			editProduct(productId).then((data) => {
+				if (data.error) {
+					console.log("error");
+				} else {
+					setEditingProduct(data);
+				}
+			});
+		}
+	}, []);
 
 	const clickSubmit = (event) => {
 		event.preventDefault();
-		createProduct(newProduct)
-			.then((data) => {
-				if (data.error) {
-					console.log(data.error);
-				} else {
-					console.log(data);
-				}
-			})
-			.catch((error) => console.log(error));
+		if (editing) {
+			postEditProduct(editingProduct).then(setMessage("success")).then();
+		} else {
+			createProduct(newProduct)
+				.then((data) => {
+					if (data.error) {
+						console.log(data.error);
+					} else {
+						console.log(data);
+					}
+				})
+				.catch((error) => console.log(error));
+		}
 	};
+
+	const [message, setMessage] = useState("");
 
 	return (
 		<div>
+			{message ? <SupportMessages message={message} /> : null}
 			<Navigation />
 			<main>
 				<form className="product-form" onSubmit={clickSubmit}>
@@ -37,8 +67,8 @@ const EditProduct = ({ editing, product }) => {
 							id="title"
 							value={
 								editing
-									? editingProduct.title
-									: newProduct.title
+									? editingProduct?.title || ""
+									: newProduct?.title
 							}
 							onChange={(e) => {
 								if (editing) {
@@ -63,8 +93,8 @@ const EditProduct = ({ editing, product }) => {
 							id="imageUrl"
 							value={
 								editing
-									? editingProduct.imageUrl
-									: newProduct.imageUrl
+									? editingProduct?.imageUrl || ""
+									: newProduct?.imageUrl
 							}
 							onChange={(e) => {
 								if (editing) {
@@ -90,8 +120,8 @@ const EditProduct = ({ editing, product }) => {
 							step="0.01"
 							value={
 								editing
-									? editingProduct.price
-									: newProduct.price
+									? editingProduct?.price || ""
+									: newProduct?.price
 							}
 							onChange={(e) => {
 								if (editing) {
@@ -113,8 +143,8 @@ const EditProduct = ({ editing, product }) => {
 						<textarea
 							value={
 								editing
-									? editingProduct.description
-									: newProduct.description
+									? editingProduct?.description || ""
+									: newProduct?.description
 							}
 							onChange={(e) => {
 								if (editing) {
@@ -134,20 +164,27 @@ const EditProduct = ({ editing, product }) => {
 							rows="5"
 						></textarea>
 					</div>
-					{editing
-						? `<input 
-							type="hidden" 
-							value={editing ? editingProduct.id : newProduct.id}
+					{editing ? (
+						<input
+							type="hidden"
+							value={
+								editing
+									? editingProduct?.id || ""
+									: newProduct?.id
+							}
 							onChange={(e) => {
 								if (editing) {
 									setEditingProduct({
 										...editingProduct,
 										id: e.target.value,
 									});
-								} 
+								}
 							}}
-							name="productId">`
-						: ""}
+							name="productId"
+						/>
+					) : (
+						""
+					)}
 					<button className="btn" type="submit">
 						{editing ? "Update Product" : "Add Product"}
 					</button>

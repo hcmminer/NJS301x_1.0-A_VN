@@ -1,6 +1,7 @@
 import Navigation from "../../components/Navigation";
 import React, { useEffect, useState } from "react";
-import { deleteProduct, getProducts } from "./apiAdmin";
+import { deleteProduct, getProducts, editProduct } from "./apiAdmin";
+import { Navigate } from "react-router-dom";
 
 const products = () => {
 	const [products, setProducts] = useState([]);
@@ -21,7 +22,6 @@ const products = () => {
 		setCartLoading(!cartLoading);
 	};
 
-	const editEvent = (productId) => (e) => {};
 	return (
 		<div>
 			<Navigation />
@@ -53,11 +53,15 @@ const products = () => {
 									<a
 										href={`/admin/edit-product/${product.id}`}
 										className="btn"
-										onClick={editEvent(product)}
 									>
 										Edit
 									</a>
-									<a onClick={deleteEvent(product)}>Delete</a>
+									<a
+										className="btn"
+										onClick={deleteEvent(product)}
+									>
+										Delete
+									</a>
 								</div>
 							</article>
 						))}
